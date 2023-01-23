@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 int calcCost(puzzleNode Ident, int Dir);
 int countMoves(puzzleNode Ident);
 void CalcPriority(puzzleNode Ident, int Cost, int Moves);
@@ -20,3 +20,4 @@ struct puzzleNode {
 	int priority;
 	int dirChanges;
 };
+*/

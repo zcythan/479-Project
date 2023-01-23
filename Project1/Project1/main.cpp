@@ -1,17 +1,51 @@
-#include<iostream>
-
-
+#include <queue>
 #include <iostream>
 #include "Header.h"
 
 using namespace std;
 
-int main() {
+struct puzzleNode {
 
+	// Ties to nearby nodes
+	// Ordered according to instructions
+	// Populate with data in this order
+
+	// 0 = Wall, can't move
+	int ID;
+	int priority;
+	int dirChanges;
+
+	bool operator<(const puzzleNode &b) const {
+		return priority < b.priority;
+	}
+};
+
+
+int main() {
+	priority_queue<puzzleNode> pq;
+
+	puzzleNode a = puzzleNode();
+	a.priority = 1;
+
+	puzzleNode b = puzzleNode();
+	b.priority = 2;
+
+	puzzleNode c = puzzleNode();
+	c.priority = 3;
+
+
+	pq.push(a);
+	pq.push(b);
+	pq.push(c);
+
+	for (int i = 0; i < 3; i++) {
+		cout << pq.top().priority << endl;
+		pq.pop();
+	}
 
 	return 0;
 }
-
+/*
 // Unfinished
 // Heuristic Function
 int countMoves(puzzleNode Ident) {
@@ -78,6 +112,10 @@ void CalcPriority(puzzleNode Ident, int Cost, int Moves) {
 // Pass this a node and which direction you are testing
 // Number = Direction: 1=N 2=E 3=S 4=W 
 // Returns 0 if you can't move
+
+
+
+
 int calcCost(puzzleNode Ident, int Dir) {
 	// Open to suggestions to change this
 	// Costs: S = 1, E = W = 2, N = 3
@@ -111,3 +149,4 @@ int calcCost(puzzleNode Ident, int Dir) {
 	}
 	return Cost;
 }
+*/
