@@ -1,5 +1,3 @@
-#include <queue>
-#include <iostream>
 #include "Header.h"
 
 using namespace std;
@@ -13,7 +11,9 @@ struct puzzleNode {
 	// 0 = Wall, can't move
 	int ID;
 	int priority;
-	int dirChanges;
+	int initX, initY;
+	int endX, endY;
+	std::string moveDirections;
 
 	bool operator<(const puzzleNode &b) const {
 		return priority < b.priority;
@@ -45,6 +45,37 @@ int main() {
 
 	return 0;
 }
+
+void getDirections(puzzleNode a) {
+	// Returns shortest path of "<num of moves><direction>"
+	int deltaX = a.endX - a.initX;
+	int deltaY = a.endY - a.initY;
+
+	// West
+	if (deltaX > 0) {
+		a.moveDirections += std::to_string(deltaX % 3) + 'W';
+	}
+	// Does not move
+	else if (deltaX == 0) {
+		a.moveDirections += "0E";
+	}
+	else if (deltaX < 0) {
+		a.moveDirections += std::to_string(abs(deltaX % 3)) + 'E';
+	}
+	// South
+	if (deltaY > 0) {
+		a.moveDirections += std::to_string(deltaY % 3) + 'S';
+	}
+	// Staying
+	else if (deltaY == 0) {
+		a.moveDirections += "0N";
+	}
+	// North
+	else if (deltaY < 0) {
+		a.moveDirections += std::to_string(abs(deltaY % 3)) + 'N';
+	}
+}
+
 /*
 // Unfinished
 // Heuristic Function
@@ -112,10 +143,6 @@ void CalcPriority(puzzleNode Ident, int Cost, int Moves) {
 // Pass this a node and which direction you are testing
 // Number = Direction: 1=N 2=E 3=S 4=W 
 // Returns 0 if you can't move
-
-
-
-
 int calcCost(puzzleNode Ident, int Dir) {
 	// Open to suggestions to change this
 	// Costs: S = 1, E = W = 2, N = 3
