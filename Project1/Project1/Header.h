@@ -1,4 +1,8 @@
 #pragma once
+#include <queue>
+#include <iostream>
+#include <string>
+
 /*
 int calcCost(puzzleNode Ident, int Dir);
 int countMoves(puzzleNode Ident);
