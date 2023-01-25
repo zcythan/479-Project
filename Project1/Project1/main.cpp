@@ -13,13 +13,14 @@ struct puzzleNode {
 	int priority;
 	int initX, initY;
 	int endX, endY;
-	std::string moveDirections;
+	//std::string moveDirections;
 
 	bool operator<(const puzzleNode &b) const {
 		return priority < b.priority;
 	}
 };
 
+/*
 void getDirections(puzzleNode a) {
 	// Returns shortest path of "<num of moves><direction>"
 	int deltaX = abs(a.endX - a.initX);
@@ -48,17 +49,26 @@ void getDirections(puzzleNode a) {
 	else if (deltaY < 0) {
 		a.moveDirections += std::to_string(abs(deltaY % 3)) + 'N';
 	}
+}*/
+
+int findPriority(puzzleNode x) {
+
+
+
 }
+
+
+
 
 int main() {
 	priority_queue<puzzleNode> pq;
 
 	puzzleNode a = { 1, 0, 1, 1, 1, 3 };
+	puzzleNode b = { 6, 0, 1, 2, 2, 1 };
 
-	
-	getDirections(a);
+	a.priority = findPriority(a);
 
-	cout << a.moveDirections << endl;
+
 
 	return 0;
 }
