@@ -51,7 +51,7 @@ void getDirections(puzzleNode a) {
 	int deltaX = a.endX - a.initX;
 	int deltaY = a.endY - a.initY;
 
-	// West
+	// west
 	if (deltaX > 0) {
 		a.moveDirections += std::to_string(deltaX % 3) + 'W';
 	}
