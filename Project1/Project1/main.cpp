@@ -20,36 +20,10 @@ struct puzzleNode {
 	}
 };
 
-
-int main() {
-	priority_queue<puzzleNode> pq;
-
-	puzzleNode a = puzzleNode();
-	a.priority = 1;
-
-	puzzleNode b = puzzleNode();
-	b.priority = 2;
-
-	puzzleNode c = puzzleNode();
-	c.priority = 3;
-
-
-	pq.push(a);
-	pq.push(b);
-	pq.push(c);
-
-	for (int i = 0; i < 3; i++) {
-		cout << pq.top().priority << endl;
-		pq.pop();
-	}
-
-	return 0;
-}
-
 void getDirections(puzzleNode a) {
 	// Returns shortest path of "<num of moves><direction>"
-	int deltaX = a.endX - a.initX;
-	int deltaY = a.endY - a.initY;
+	int deltaX = abs(a.endX - a.initX);
+	int deltaY = abs(a.endY - a.initY);
 
 	// West
 	if (deltaX > 0) {
@@ -75,6 +49,21 @@ void getDirections(puzzleNode a) {
 		a.moveDirections += std::to_string(abs(deltaY % 3)) + 'N';
 	}
 }
+
+int main() {
+	priority_queue<puzzleNode> pq;
+
+	puzzleNode a = { 1, 0, 1, 1, 1, 3 };
+
+	
+	getDirections(a);
+
+	cout << a.moveDirections << endl;
+
+	return 0;
+}
+
+
 
 /*
 // Unfinished
