@@ -1,8 +1,8 @@
-#include "Header.h"
+#include "Puzzle.h"
 
 using namespace std;
-
-struct puzzleNode {
+/*
+struct puzzleNode { //going to go in solver i think?
 
 	// Ties to nearby nodes
 	// Ordered according to instructions
@@ -13,18 +13,19 @@ struct puzzleNode {
 	int priority;
 	int initX, initY;
 	int endX, endY;
-	//std::string moveDirections;
+	std::string moveDirections;
 
 	bool operator<(const puzzleNode &b) const {
 		return priority < b.priority;
 	}
 };
 
-/*
+
 void getDirections(puzzleNode a) {
 	// Returns shortest path of "<num of moves><direction>"
-	int deltaX = abs(a.endX - a.initX);
-	int deltaY = abs(a.endY - a.initY);
+	int deltaX = a.endX - a.initX;
+	int deltaY = a.endY - a.initY;
+
 
 	// west
 	if (deltaX > 0) {
@@ -49,25 +50,15 @@ void getDirections(puzzleNode a) {
 	else if (deltaY < 0) {
 		a.moveDirections += std::to_string(abs(deltaY % 3)) + 'N';
 	}
-}*/
-
-int findPriority(puzzleNode x) {
-
-
-
 }
-
+*/
 
 
 
 int main() {
-	priority_queue<puzzleNode> pq;
+	Puzzle p1 = Puzzle();
 
-	puzzleNode a = { 1, 0, 1, 1, 1, 3 };
-	puzzleNode b = { 6, 0, 1, 2, 2, 1 };
-
-	a.priority = findPriority(a);
-
+	p1.display();
 
 
 	return 0;
