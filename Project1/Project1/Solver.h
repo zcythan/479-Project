@@ -11,7 +11,7 @@ struct puzzleNode {
 	vector<vector<int>> state;
 	int cost;
 	int heu;
-	int priority; //set equal to calculation between cost and heu
+	int priority;
 
 	bool operator<(const puzzleNode& b) const {
 		return priority < b.priority;
@@ -26,7 +26,7 @@ private:
 	vector<vector<int>> goalState;
 	priority_queue<puzzleNode> frontier;
 	unordered_map<int, puzzleNode> exploredSet;
-	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); //internal use only
+	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); 
 	void nodeBuilder(vector<vector<int>> cur, int cost);
 	int heuristic(vector<vector<int>> cur, int heu = 0, int x = 0, int y = 0);
 	void expandStates();
