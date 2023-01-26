@@ -15,9 +15,7 @@ int main() {
 	};
 
 	Solver s1 = Solver(initState, goalState);
-
-	s1.expandStates();
-	s1.printNodes();
+	s1.solve();
 	return 0;
 }
 

@@ -27,10 +27,11 @@ private:
 	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); //internal use only
 	void nodeBuilder(vector<vector<int>> cur, int cost);
 	int heuristic(vector<vector<int>> cur, int heu = 0, int x = 0, int y = 0);
+	void expandStates();
+	void printNodes();
 
 public:
 	Solver();
 	Solver(vector<vector<int>> init, vector<vector<int>> goal);
-	void expandStates();
-	void printNodes();
+	void solve();
 };

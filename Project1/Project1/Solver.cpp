@@ -89,7 +89,7 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 
 	int heu = heuristic(cur); //heu function
 	int eval = ((currentCost + cost) + heu);
-	int pri = (((100-eval)*(10-1))/100); //calculate priority
+	int pri = 100 - eval;//(((100-eval)*(10-1))/100); //calculate priority
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 	frontier.push(pn);
@@ -169,6 +169,9 @@ void Solver::expandStates() {
 	if (allowedDir[2]) {
 		cout << currentState[rid+1][cid]; //cost of 3
 	}
-	
+}
 
+void Solver::solve() {
+	expandStates();
+	printNodes();
 }
