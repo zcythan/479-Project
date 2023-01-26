@@ -77,6 +77,9 @@ void Solver::expandStates() {
 	int rid = row - 1;
 	int cid = col - 1;
 
+	if (allowedDir[3]) {
+		cout << currentState[rid][cid - 1];
+	}
 	if (allowedDir[0]) {
 		display(swapTile(currentState, currentState[rid - 1][cid], rid, cid)); // then print the return from a display function.
 	}
@@ -85,9 +88,6 @@ void Solver::expandStates() {
 	}
 	if (allowedDir[2]) {
 		cout << currentState[rid+1][cid];
-	}
-	if (allowedDir[3]) {
-		cout << currentState[rid][cid-1];
 	}
 	
 
