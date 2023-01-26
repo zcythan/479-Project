@@ -1,5 +1,5 @@
 #include "Puzzle.h"
-
+#include "Solver.h"
 using namespace std;
 /*
 struct puzzleNode { //going to go in solver i think?
@@ -57,8 +57,8 @@ void getDirections(puzzleNode a) {
 
 int main() {
 	Puzzle p1 = Puzzle();
-
-	p1.display();
+	Solver s1 = Solver(p1);
+	s1.expandStates();
 
 
 	return 0;

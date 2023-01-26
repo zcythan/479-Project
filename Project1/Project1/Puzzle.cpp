@@ -1,6 +1,13 @@
 #include "Puzzle.h"
 
 Puzzle::Puzzle() {
+	
+	state.resize(3);
+
+	for (int i = 0; i < 3; i++) {
+		state[i].resize(3);
+	}
+
 	state[0][0] = 1;
 	state[0][1] = 6;
 	state[0][2] = 2;
@@ -10,6 +17,7 @@ Puzzle::Puzzle() {
 	state[2][0] = 0;
 	state[2][1] = 4;
 	state[2][2] = 3;
+	
 }
 
 void Puzzle::display() {
@@ -24,4 +32,8 @@ void Puzzle::display() {
 		}
 		cout << curRow << endl;
 	}
+}
+
+vector<vector<int>> Puzzle::getState() {
+	return state;
 }
