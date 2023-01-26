@@ -101,7 +101,6 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 
 		display(cur); //will be moved once hash table is implemented.
 		
-
 		//check if frontier.top() is in the exploredSet.
 		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
 		//Then, check all other entries in frontier, if they aren't in the exploredSet, add them and then pop. 
@@ -123,7 +122,7 @@ void Solver::expandStates() {
 	int maxOutcomes = 4;
 	//North, east, south, west
 	bool allowedDir[4] = { true, true, true, true };
-	//step one, find the blank tile
+	//find the blank tile
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			if (currentState[i][j] == 0) {
@@ -133,7 +132,6 @@ void Solver::expandStates() {
 			}
 		}
 	}
-
 	//find number of child nodes that need to be generated.
 	if (col == 1) {
 		allowedDir[3] = false;
@@ -147,9 +145,8 @@ void Solver::expandStates() {
 	if (row == 3) {
 		allowedDir[2] = false;
 	}
+
 	//generate them
-	//maybe push them into a vector or something, a vector containing vectors. for now lets just generate and print. 
-	
 	int rid = row - 1;
 	int cid = col - 1;
 
@@ -157,7 +154,7 @@ void Solver::expandStates() {
 		nodeBuilder(swapTile(currentState, currentState[rid][cid - 1], rid, cid), 2);
 	}
 	if (allowedDir[0]) {
-		nodeBuilder(swapTile(currentState, currentState[rid - 1][cid], rid, cid), 1); // then print the return from a display function.
+		nodeBuilder(swapTile(currentState, currentState[rid - 1][cid], rid, cid), 1);
 	}
 	if (allowedDir[1]) {
 		nodeBuilder(swapTile(currentState, currentState[rid][cid + 1], rid, cid), 2);
