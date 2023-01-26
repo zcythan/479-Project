@@ -32,6 +32,7 @@ void Puzzle::display() {
 		}
 		cout << curRow << endl;
 	}
+	cout << endl;
 }
 
 vector<vector<int>> Puzzle::getState() {
