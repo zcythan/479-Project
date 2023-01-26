@@ -11,7 +11,6 @@ int main() {
 	p1.display();
 	s1.expandStates();
 
-
 	return 0;
 }
 
