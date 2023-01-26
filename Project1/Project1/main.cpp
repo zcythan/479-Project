@@ -1,10 +1,6 @@
-#include "Puzzle.h"
 #include "Solver.h"
 using namespace std;
-
-
-
-
+//All comments that were here before are now in the comments.cpp file.
 int main() {
 	vector<vector<int>> goalState = {
 		{7,8,1},
@@ -12,9 +8,14 @@ int main() {
 		{5,4,3}
 	};
 
-	Puzzle p1 = Puzzle();
-	Solver s1 = Solver(p1, goalState);
-	p1.display();
+	vector<vector<int>> initState = {
+		{1,6,2},
+		{5,7,8},
+		{0,4,3}
+	};
+
+	Solver s1 = Solver(initState, goalState);
+
 	s1.expandStates();
 	s1.printNodes();
 	return 0;

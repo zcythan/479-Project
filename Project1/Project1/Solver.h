@@ -1,8 +1,10 @@
 #pragma once
-#include "Puzzle.h"
+#include <vector>
 #include <queue>
 #include <iostream>
 #include <string>
+
+using namespace std;
 
 struct puzzleNode {
 	vector<vector<int>> state;
@@ -18,15 +20,17 @@ struct puzzleNode {
 class Solver {
 
 private:
+	int currentCost;
 	vector<vector<int>> currentState;
 	vector<vector<int>> goalState;
 	priority_queue<puzzleNode> frontier;
 	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); //internal use only
 	void nodeBuilder(vector<vector<int>> cur, int cost);
+	int heuristic(vector<vector<int>> cur, int heu = 0, int x = 0, int y = 0);
 
 public:
 	Solver();
-	Solver(Puzzle p, vector<vector<int>> goal);
+	Solver(vector<vector<int>> init, vector<vector<int>> goal);
 	void expandStates();
 	void printNodes();
 };
