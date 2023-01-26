@@ -30,7 +30,8 @@ private:
 	void nodeBuilder(vector<vector<int>> cur, int cost);
 	int heuristic(vector<vector<int>> cur, int heu = 0, int x = 0, int y = 0);
 	void expandStates();
-	void printNodes();
+	void prepHash();
+	void display(vector<vector<int>> currentState);
 
 public:
 	Solver();

@@ -5,7 +5,7 @@ Solver::Solver() {
 	cout << "Invalid object used as input" << endl;
 }
 
-void display(vector<vector<int>> currentState) { //temporary, move or delete later
+void Solver::display(vector<vector<int>> currentState) { //User interface design would go here.
 	for (int i = 0; i < 3; i++) {
 		string curRow = "";
 		for (int j = 0; j < 3; j++) {
@@ -17,6 +17,8 @@ void display(vector<vector<int>> currentState) { //temporary, move or delete lat
 		}
 		cout << curRow << endl;
 	}
+	if(!frontier.empty())
+		cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
 	cout << endl;
 }
 
@@ -25,7 +27,7 @@ Solver::Solver(vector<vector<int>> init, vector<vector<int>> goal) {
 	currentState = init;
 	currentCost = 0;
 	goalState = goal;
-	display(currentState);
+	display(currentState); //prints initial state.
 }
 
 vector<vector<int>> Solver::swapTile(vector<vector<int>> cur, int id, int rid, int cid) {
@@ -94,24 +96,12 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	frontier.push(pn); //add nodes to frontier set
 }
 
-void Solver::printNodes() { //name of this function might be irrelevant. Will change after it's done.
+void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
 	while (!frontier.empty()) {
 		vector<vector<int>> cur = frontier.top().state;
-		/*
-		for (int i = 0; i < 3; i++) {
-			string curRow = "";
-			for (int j = 0; j < 3; j++) {
-				if (cur[i][j] == 0) {
-					curRow += "-";
-					continue;
-				}
-				curRow += to_string(cur[i][j]);
-			}
-			cout << curRow << endl;
-		} */
-		display(cur);
+
+		display(cur); //will be moved once hash table is implemented.
 		
-		cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
 
 		//check if frontier.top() is in the exploredSet.
 		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
@@ -120,10 +110,11 @@ void Solver::printNodes() { //name of this function might be irrelevant. Will ch
 		//If the first node IS in the explored set, then just pop it and check the next top. 
 		//Keep popping until it finds a node not in the set, then set it to currentState, add to exploredSet and pop. 
 		// 
-		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value. 
+		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value, call the display(cur) function here too. 
+		
 
 		frontier.pop();
-		cout << endl;
+		//cout << endl;
 	}
 }
 
@@ -183,6 +174,7 @@ void Solver::expandStates() {
 }
 
 void Solver::solve() {
+	//When ready, add a while loop that runs until currentState == goalState.
 	expandStates();
-	printNodes();
+	prepHash();
 }
