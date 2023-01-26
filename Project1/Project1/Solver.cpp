@@ -8,7 +8,7 @@ Solver::Solver(Puzzle p) {
 	currentState = p.getState();
 }
 
-vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid) {
+vector<vector<int>> Solver::swapTile(vector<vector<int>> cur, int id, int rid, int cid) {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			if (cur[i][j] == id) {
@@ -19,6 +19,17 @@ vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid) 
 	}
 	cur[rid][cid] = id;
 	return cur;
+}
+
+void Solver::nodeBuilder(vector<vector<int>> cur) {
+
+
+	int cost = 0;// cost function
+	int heu = 0; //heu function
+	int pri = 0; //calculate priority
+
+	puzzleNode pn = { cur, cost, heu, pri };
+	frontier.push(pn);
 }
 
 void display(vector<vector<int>> cur) {
@@ -81,7 +92,7 @@ void Solver::expandStates() {
 		cout << currentState[rid][cid - 1];
 	}
 	if (allowedDir[0]) {
-		display(swapTile(currentState, currentState[rid - 1][cid], rid, cid)); // then print the return from a display function.
+		nodeBuilder(swapTile(currentState, currentState[rid - 1][cid], rid, cid)); // then print the return from a display function.
 	}
 	if (allowedDir[1]) {
 		display(swapTile(currentState, currentState[rid][cid + 1], rid, cid));
