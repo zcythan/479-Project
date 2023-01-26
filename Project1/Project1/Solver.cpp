@@ -88,9 +88,8 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 
 	int heu = heuristic(cur); //heu function
-	int pri = 0; //calculate priority
-
-
+	int eval = ((currentCost + cost) + heu);
+	int pri = (((100-eval)*(10-1))/100); //calculate priority
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 	frontier.push(pn);
@@ -111,7 +110,7 @@ void Solver::printNodes() {
 			cout << curRow << endl;
 		}
 		currentCost += frontier.top().cost;
-		cout << frontier.top().cost << " " << frontier.top().heu << endl;
+		cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
 		frontier.pop();
 		cout << endl;
 	}
