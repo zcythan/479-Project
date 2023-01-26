@@ -86,18 +86,18 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 }
 
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
-
 	int heu = heuristic(cur); //heu function
 	int eval = ((currentCost + cost) + heu);
-	int pri = 100 - eval;//(((100-eval)*(10-1))/100); //calculate priority
+	int pri = abs(100 - eval);//(((100-eval)*(10-1))/100); //calculate priority
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
-	frontier.push(pn);
+	frontier.push(pn); //add nodes to frontier set
 }
 
-void Solver::printNodes() {
+void Solver::printNodes() { //name of this function might be irrelevant. Will change after it's done.
 	while (!frontier.empty()) {
 		vector<vector<int>> cur = frontier.top().state;
+		/*
 		for (int i = 0; i < 3; i++) {
 			string curRow = "";
 			for (int j = 0; j < 3; j++) {
@@ -108,9 +108,20 @@ void Solver::printNodes() {
 				curRow += to_string(cur[i][j]);
 			}
 			cout << curRow << endl;
-		}
-		currentCost += frontier.top().cost;
+		} */
+		display(cur);
+		
 		cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
+
+		//check if frontier.top() is in the exploredSet.
+		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
+		//Then, check all other entries in frontier, if they aren't in the exploredSet, add them and then pop. 
+		// 
+		//If the first node IS in the explored set, then just pop it and check the next top. 
+		//Keep popping until it finds a node not in the set, then set it to currentState, add to exploredSet and pop. 
+		// 
+		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value. 
+
 		frontier.pop();
 		cout << endl;
 	}

@@ -3,6 +3,7 @@
 #include <queue>
 #include <iostream>
 #include <string>
+#include<unordered_map> //hashtable
 
 using namespace std;
 
@@ -24,6 +25,7 @@ private:
 	vector<vector<int>> currentState;
 	vector<vector<int>> goalState;
 	priority_queue<puzzleNode> frontier;
+	unordered_map<int, puzzleNode> exploredSet;
 	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); //internal use only
 	void nodeBuilder(vector<vector<int>> cur, int cost);
 	int heuristic(vector<vector<int>> cur, int heu = 0, int x = 0, int y = 0);
