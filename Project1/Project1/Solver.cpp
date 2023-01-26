@@ -5,15 +5,15 @@ Solver::Solver() {
 	cout << "Invalid object used as input" << endl;
 }
 
-void Solver::display(vector<vector<int>> currentState) { //User interface design would go here.
+void Solver::display(vector<vector<int>> cur) { //User interface design would go here.
 	for (int i = 0; i < 3; i++) {
 		string curRow = "";
 		for (int j = 0; j < 3; j++) {
-			if (currentState[i][j] == 0) {
+			if (cur[i][j] == 0) {
 				curRow += "-";
 				continue;
 			}
-			curRow += to_string(currentState[i][j]);
+			curRow += to_string(cur[i][j]);
 		}
 		cout << curRow << endl;
 	}
@@ -50,7 +50,6 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 		y = 0;
 	
 	int curID = cur[x][y];
-
 	int goalCords[2] = { 0, 0 };
 	int temp = 0;
 
@@ -64,7 +63,7 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 		}
 	}
 
-	//logic for calculating the number of steps/ in what direction.
+	//logic for calculating the number of steps/in what direction.
 	int deltaX = x - goalCords[0]; //Chance's heuristic logic.
 	int deltaY = y - goalCords[1];
 	if (curID != 0) {
@@ -110,14 +109,13 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 		//If the first node IS in the explored set, then just pop it and check the next top. 
 		//Keep popping until it finds a node not in the set, then set it to currentState, add to exploredSet and pop. 
 		// 
-		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value, call the display(cur) function here too. 
+		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value, call the display(cur) function too. 
 		
 
 		frontier.pop();
 		//cout << endl;
 	}
 }
-
 
 void Solver::expandStates() {
 	//generate vectors representing all states of possible move from the current state.
@@ -138,19 +136,15 @@ void Solver::expandStates() {
 
 	//find number of child nodes that need to be generated.
 	if (col == 1) {
-		maxOutcomes--;
 		allowedDir[3] = false;
 	}
 	if (row == 1) {
-		maxOutcomes--;
 		allowedDir[0] = false;
 	}
 	if (col == 3) {
-		maxOutcomes--;
 		allowedDir[1] = false;
 	}
 	if (row == 3) {
-		maxOutcomes--;
 		allowedDir[2] = false;
 	}
 	//generate them
@@ -169,7 +163,7 @@ void Solver::expandStates() {
 		nodeBuilder(swapTile(currentState, currentState[rid][cid + 1], rid, cid), 2);
 	}
 	if (allowedDir[2]) {
-		cout << currentState[rid+1][cid]; //cost of 3
+		nodeBuilder(swapTile(currentState, currentState[rid + 1][cid], rid, cid), 3);
 	}
 }
 
