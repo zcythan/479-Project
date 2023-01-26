@@ -130,6 +130,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Puzzle.cpp" />
     <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="comments.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solver.h" />

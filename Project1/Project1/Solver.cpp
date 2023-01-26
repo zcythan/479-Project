@@ -4,8 +4,9 @@ Solver::Solver() {
 	cout << "Invalid object used as input" << endl;
 }
 
-Solver::Solver(Puzzle p) {
+Solver::Solver(Puzzle p, vector<vector<int>> goal) {
 	currentState = p.getState();
+	goalState = goal;
 }
 
 vector<vector<int>> Solver::swapTile(vector<vector<int>> cur, int id, int rid, int cid) {
@@ -21,15 +22,35 @@ vector<vector<int>> Solver::swapTile(vector<vector<int>> cur, int id, int rid, i
 	return cur;
 }
 
-void Solver::nodeBuilder(vector<vector<int>> cur) {
 
+void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 
-	int cost = 0;// cost function
 	int heu = 0; //heu function
 	int pri = 0; //calculate priority
 
 	puzzleNode pn = { cur, cost, heu, pri };
 	frontier.push(pn);
+}
+
+void Solver::printNodes() {
+		vector<vector<int>> cur = frontier.top().state;
+		for (int i = 0; i < 3; i++) {
+			string curRow = "";
+			for (int j = 0; j < 3; j++) {
+				if (cur[i][j] == 0) {
+					curRow += "-";
+					continue;
+				}
+				curRow += to_string(cur[i][j]);
+			}
+			cout << curRow << endl;
+		}
+		cout << frontier.top().cost;
+		frontier.pop();
+		cout << endl;
+
+		while (!frontier.empty())
+			frontier.pop();
 }
 
 void display(vector<vector<int>> cur) {
@@ -89,16 +110,16 @@ void Solver::expandStates() {
 	int cid = col - 1;
 
 	if (allowedDir[3]) {
-		cout << currentState[rid][cid - 1];
+		cout << currentState[rid][cid - 1]; //cost of 2
 	}
 	if (allowedDir[0]) {
-		nodeBuilder(swapTile(currentState, currentState[rid - 1][cid], rid, cid)); // then print the return from a display function.
+		nodeBuilder(swapTile(currentState, currentState[rid - 1][cid], rid, cid), 1); // then print the return from a display function.
 	}
 	if (allowedDir[1]) {
-		display(swapTile(currentState, currentState[rid][cid + 1], rid, cid));
+		nodeBuilder(swapTile(currentState, currentState[rid][cid + 1], rid, cid), 2);
 	}
 	if (allowedDir[2]) {
-		cout << currentState[rid+1][cid];
+		cout << currentState[rid+1][cid]; //cost of 3
 	}
 	
 

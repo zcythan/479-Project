@@ -19,12 +19,14 @@ class Solver {
 
 private:
 	vector<vector<int>> currentState;
+	vector<vector<int>> goalState;
 	priority_queue<puzzleNode> frontier;
 	vector<vector<int>> swapTile(vector<vector<int>> cur, int id, int rid, int cid); //internal use only
-	void nodeBuilder(vector<vector<int>> cur);
+	void nodeBuilder(vector<vector<int>> cur, int cost);
 
 public:
 	Solver();
-	Solver(Puzzle p);
+	Solver(Puzzle p, vector<vector<int>> goal);
 	void expandStates();
+	void printNodes();
 };
