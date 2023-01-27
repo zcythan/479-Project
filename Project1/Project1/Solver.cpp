@@ -119,7 +119,6 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 void Solver::expandStates() {
 	//generate vectors representing all states of possible move from the current state.
 	int row, col;
-	int maxOutcomes = 4;
 	//North, east, south, west
 	bool allowedDir[4] = { true, true, true, true };
 	//find the blank tile
