@@ -98,14 +98,8 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 int Solver::generateHash(vector<vector<int>> cur) {
 	string temp = "";
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-				temp += to_string(cur[i][j]);
-		}
-	}
+	int key = hashData(cur);
 	
-	hash<string> genKey;
-	int key = genKey(temp);
 	cout << key << endl;
 	return key;
 }
@@ -115,7 +109,7 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 
 		vector<vector<int>> cur = frontier.top().state;
 		int hash = generateHash(cur);
-
+		
 		// Taking top node, updating global values, saving to hash table 
 		while (!frontier.empty()) {
 			exploredSet.emplace(hash, frontier.top());
