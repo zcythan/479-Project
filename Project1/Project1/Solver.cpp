@@ -93,7 +93,7 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 	frontier.push(pn); //add nodes to frontier set
-}
+}  
 
 void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
 	while (!frontier.empty()) {
