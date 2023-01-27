@@ -88,7 +88,7 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	int heu = heuristic(cur); //heu function
-	int eval = ((currentCost + cost) + heu);
+	int eval = ((currentCost + cost) + heu); // f(n) 
 	int pri = abs(100 - eval);
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
@@ -101,6 +101,13 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 
 		display(cur); //will be moved once hash table is implemented.
 		
+		if (exploredSet.empty()) {
+
+		}
+		else {
+
+		}
+
 		//check if frontier.top() is in the exploredSet.
 		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
 		//Then, check all other entries in frontier, if they aren't in the exploredSet, add them and then pop. 
@@ -112,7 +119,7 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 		
 
 		frontier.pop();
-		//cout << endl;
+		std::cout << std::endl;
 	}
 }
 
