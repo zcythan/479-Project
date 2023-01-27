@@ -6,20 +6,43 @@ Solver::Solver() {
 }
 
 void Solver::display(vector<vector<int>> cur) { //User interface design would go here.
-	for (int i = 0; i < 3; i++) {
-		string curRow = "";
-		for (int j = 0; j < 3; j++) {
-			if (cur[i][j] == 0) {
-				curRow += "-";
-				continue;
+	int check = 12768543;
+	/*
+	if (genKey(cur) == 12768543) {
+		cout << "Found key" << endl;
+		while (!frontier.empty()) {
+			for (int i = 0; i < 3; i++) {
+				string curRow = "";
+				for (int j = 0; j < 3; j++) {
+					if (frontier.top().state[i][j] == 0) {
+						curRow += "-";
+						continue;
+					}
+					curRow += to_string(frontier.top().state[i][j]);
+				}
+				cout << curRow << endl;
 			}
-			curRow += to_string(cur[i][j]);
+			if (!frontier.empty())
+				cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
+			cout << endl;
+			frontier.pop();
 		}
-		cout << curRow << endl;
-	}
-	if(!frontier.empty())
-		cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
-	cout << endl;
+	}*/
+	//original code
+		for (int i = 0; i < 3; i++) {
+			string curRow = "";
+			for (int j = 0; j < 3; j++) {
+				if (cur[i][j] == 0) {
+					curRow += "-";
+					continue;
+				}
+				curRow += to_string(cur[i][j]);
+			}
+			cout << curRow << endl;
+		}
+		if (!frontier.empty())
+			cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
+		cout << endl;
 }
 
 
@@ -87,12 +110,14 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 }
 
 int Solver::genKey(vector<vector<int>> cur) {
-	string temp = "";
+	string temp = "0";
+	//hash<string> genHash;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			temp += to_string(frontier.top().state[i][j]);
+			temp += to_string(cur[i][j]);
 		}
 	}
+	//return genHash(temp);
 	return stoi(temp);
 }
 
@@ -114,8 +139,6 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	}
 }  
 
-
-
 void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
 		// Get the current state from the top of the priority queue
 
@@ -124,12 +147,17 @@ void Solver::prepHash() { //name of this function is irrelevant. Change it at so
 
 		// Taking top node, updating global values, saving to hash table 
 		
+		exploredSet.emplace(hash, frontier.top());
+		currentCost = frontier.top().cost;
+		currentState = cur;
+		display(cur);
+		frontier.pop();
+
 		while (!frontier.empty()) {
+			cur = frontier.top().state;
+			hash = genKey(cur);
 			exploredSet.emplace(hash, frontier.top());
-			currentCost = frontier.top().cost;
-			currentState = cur;
 			frontier.pop();
-			display(cur);
 		} 
 }
 
@@ -182,6 +210,8 @@ void Solver::expandStates() {
 
 void Solver::solve() {
 	//When ready, add a while loop that runs until currentState == goalState.
-	expandStates();
-	prepHash();
+	while(!(currentState == goalState)){
+		expandStates();
+		prepHash();
+	}
 }
