@@ -89,7 +89,7 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	int heu = heuristic(cur); //heu function
 	int eval = ((currentCost + cost) + heu);
-	int pri = abs(100 - eval);//(((100-eval)*(10-1))/100); //calculate priority
+	int pri = abs(100 - eval);
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 	frontier.push(pn); //add nodes to frontier set
