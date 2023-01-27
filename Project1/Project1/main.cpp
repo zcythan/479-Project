@@ -19,6 +19,3 @@ int main() {
 	s1.solve();
 	return 0;
 }
-
-
-

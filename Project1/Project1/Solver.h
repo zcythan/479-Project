@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map> //hashtable
+#include <unordered_set>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ private:
 	void expandStates();
 	void prepHash();
 	void display(vector<vector<int>> currentState);
+	int generateHash(vector<vector<int>> cur);
 
 public:
 	Solver();

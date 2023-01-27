@@ -88,32 +88,36 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	int heu = heuristic(cur); //heu function
-	int eval = ((currentCost + cost) + heu);
+	int eval = ((currentCost + cost) + heu); // f(n) 
 	int pri = abs(100 - eval);
 
 	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 	frontier.push(pn); //add nodes to frontier set
 }  
 
+int Solver::generateHash(vector<vector<int>> cur) {
+	string temp = "";
+
+	int key = hashData(cur);
+	
+	cout << key << endl;
+	return key;
+}
+
 void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
-	while (!frontier.empty()) {
+		// Get the current state from the top of the priority queue
+
 		vector<vector<int>> cur = frontier.top().state;
-
-		display(cur); //will be moved once hash table is implemented.
+		int hash = generateHash(cur);
 		
-		//check if frontier.top() is in the exploredSet.
-		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
-		//Then, check all other entries in frontier, if they aren't in the exploredSet, add them and then pop. 
-		// 
-		//If the first node IS in the explored set, then just pop it and check the next top. 
-		//Keep popping until it finds a node not in the set, then set it to currentState, add to exploredSet and pop. 
-		// 
-		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value, call the display(cur) function too. 
-		
-
-		frontier.pop();
-		//cout << endl;
-	}
+		// Taking top node, updating global values, saving to hash table 
+		while (!frontier.empty()) {
+			exploredSet.emplace(hash, frontier.top());
+			currentCost = frontier.top().cost;
+			currentState = cur;
+			frontier.pop();
+			display(cur);
+		}
 }
 
 void Solver::expandStates() {
