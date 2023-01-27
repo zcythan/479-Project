@@ -86,38 +86,51 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 	return heuristic(cur, heu+temp, x, y);
 }
 
+int Solver::genKey(vector<vector<int>> cur) {
+	string temp = "";
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			temp += to_string(frontier.top().state[i][j]);
+		}
+	}
+	return stoi(temp);
+}
+
 void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	int heu = heuristic(cur); //heu function
 	int eval = ((currentCost + cost) + heu); // f(n) 
 	int pri = abs(100 - eval);
 
-	puzzleNode pn = { cur, (currentCost + cost), heu, pri };
-	frontier.push(pn); //add nodes to frontier set
+	if (exploredSet.empty()) {
+		puzzleNode pn = { cur, (currentCost + cost), heu, pri };
+		frontier.push(pn); //add nodes to frontier set
+	}
+	else {
+		int key = genKey(cur);
+		if (exploredSet.find(key) == exploredSet.end()) {
+			puzzleNode pn = { cur, (currentCost + cost), heu, pri };
+			frontier.push(pn); //add nodes to frontier set
+		}
+	}
 }  
 
-int Solver::generateHash(vector<vector<int>> cur) {
-	string temp = "";
 
-	int key = hashData(cur);
-	
-	cout << key << endl;
-	return key;
-}
 
 void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
 		// Get the current state from the top of the priority queue
 
 		vector<vector<int>> cur = frontier.top().state;
-		int hash = generateHash(cur);
-		
+		int hash = genKey(cur);
+
 		// Taking top node, updating global values, saving to hash table 
+		
 		while (!frontier.empty()) {
 			exploredSet.emplace(hash, frontier.top());
 			currentCost = frontier.top().cost;
 			currentState = cur;
 			frontier.pop();
 			display(cur);
-		}
+		} 
 }
 
 void Solver::expandStates() {
