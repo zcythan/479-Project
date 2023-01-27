@@ -95,32 +95,35 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	frontier.push(pn); //add nodes to frontier set
 }
 
-void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
-	while (!frontier.empty()) {
-		vector<vector<int>> cur = frontier.top().state;
+int Solver::generateHash(vector<vector<int>> cur) {
+	string temp = "";
 
-		display(cur); //will be moved once hash table is implemented.
-		
-		if (exploredSet.empty()) {
-
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+				temp += to_string(cur[i][j]);
 		}
-		else {
-
-		}
-
-		//check if frontier.top() is in the exploredSet.
-		//If the first node is NOT in the explored set, then add it, update the currentState to equal frontier.top.state() and pop.
-		//Then, check all other entries in frontier, if they aren't in the exploredSet, add them and then pop. 
-		// 
-		//If the first node IS in the explored set, then just pop it and check the next top. 
-		//Keep popping until it finds a node not in the set, then set it to currentState, add to exploredSet and pop. 
-		// 
-		//ALSO use currentCost+= frontier.top().cost at the same time you reassign the currentState value, call the display(cur) function too. 
-		
-
-		frontier.pop();
-		std::cout << std::endl;
 	}
+	
+	hash<string> genKey;
+	int key = genKey(temp);
+	cout << key << endl;
+	return key;
+}
+
+void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
+		// Get the current state from the top of the priority queue
+
+		vector<vector<int>> cur = frontier.top().state;
+		int hash = generateHash(cur);
+
+		// Taking top node, updating global values, saving to hash table 
+		while (!frontier.empty()) {
+			exploredSet.emplace(hash, frontier.top());
+			currentCost = frontier.top().cost;
+			currentState = cur;
+			frontier.pop();
+			display(cur);
+		}
 }
 
 void Solver::expandStates() {
