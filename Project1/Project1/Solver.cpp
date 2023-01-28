@@ -29,7 +29,6 @@ void Solver::display(vector<vector<int>> cur) { //User interface design would go
 		expNum++;
 }
 
-
 Solver::Solver(vector<vector<int>> init, vector<vector<int>> goal) {
 	currentState = init;
 	currentCost = 0;
@@ -192,7 +191,7 @@ void Solver::expandStates() {
 
 void Solver::solve() {
 	//When ready, add a while loop that runs until currentState == goalState.
-	while(!(currentState == goalState)){
+	while(currentState != goalState){
 		expandStates();
 		while (!overflow.empty()) {
 			currentState = overflow.top().state;

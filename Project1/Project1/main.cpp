@@ -17,6 +17,6 @@ int main() {
 
 	Solver s1 = Solver(initState, goalState);
 	s1.solve();
-	//system("pause");
+	system("pause");
 	return 0;
 }
