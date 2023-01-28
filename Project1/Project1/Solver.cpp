@@ -8,25 +8,25 @@ Solver::Solver() {
 }
 
 void Solver::display(vector<vector<int>> cur) { //User interface design would go here.
-		for (int i = 0; i < 3; i++) {
-			string curRow = "";
-			for (int j = 0; j < 3; j++) {
-				if (cur[i][j] == 0) {
-					curRow += "-";
-					continue;
-				}
-				curRow += to_string(cur[i][j]);
+	for (int i = 0; i < 3; i++) {
+		string curRow = "";
+		for (int j = 0; j < 3; j++) {
+			if (cur[i][j] == 0) {
+				curRow += "-";
+				continue;
 			}
-			cout << curRow << endl;
+			curRow += to_string(cur[i][j]);
 		}
-		if (!frontier.empty()) {
-			cout << frontier.top().cost << " " << frontier.top().heu << " " << expNum << endl;
-		}
-		else {
-			cout << 0 << " " << heuristic(currentState) << " " << expNum << endl;
-		}
-		cout << endl;
-		expNum++;
+		cout << curRow << endl;
+	}
+	if (!frontier.empty()) {
+		cout << frontier.top().cost << " " << frontier.top().heu << " " << expNum << endl;
+	}
+	else {
+		cout << 0 << " " << heuristic(currentState) << " " << expNum << endl;
+	}
+	cout << endl;
+	expNum++;
 }
 
 Solver::Solver(vector<vector<int>> init, vector<vector<int>> goal) {
