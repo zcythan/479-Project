@@ -1,4 +1,5 @@
 #include "Solver.h"
+#include<vector>
 using namespace std;
 //All comments that were here before are now in the comments.cpp file.
 int main() {
