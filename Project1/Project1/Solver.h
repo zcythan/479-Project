@@ -23,6 +23,9 @@ class Solver {
 
 private:
 	int currentCost;
+	int lastPri;
+	int expNum;
+	priority_queue<puzzleNode> overflow;
 	vector<vector<int>> currentState;
 	vector<vector<int>> goalState;
 	priority_queue<puzzleNode> frontier;

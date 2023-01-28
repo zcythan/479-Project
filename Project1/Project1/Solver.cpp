@@ -2,33 +2,12 @@
 
 Solver::Solver() {
 	currentCost = 0;
+	lastPri = 0;
+	expNum = 0;
 	cout << "Invalid object used as input" << endl;
 }
 
 void Solver::display(vector<vector<int>> cur) { //User interface design would go here.
-	int check = 12768543;
-	/*
-	if (genKey(cur) == 12768543) {
-		cout << "Found key" << endl;
-		while (!frontier.empty()) {
-			for (int i = 0; i < 3; i++) {
-				string curRow = "";
-				for (int j = 0; j < 3; j++) {
-					if (frontier.top().state[i][j] == 0) {
-						curRow += "-";
-						continue;
-					}
-					curRow += to_string(frontier.top().state[i][j]);
-				}
-				cout << curRow << endl;
-			}
-			if (!frontier.empty())
-				cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
-			cout << endl;
-			frontier.pop();
-		}
-	}*/
-	//original code
 		for (int i = 0; i < 3; i++) {
 			string curRow = "";
 			for (int j = 0; j < 3; j++) {
@@ -40,15 +19,22 @@ void Solver::display(vector<vector<int>> cur) { //User interface design would go
 			}
 			cout << curRow << endl;
 		}
-		if (!frontier.empty())
-			cout << frontier.top().cost << " " << frontier.top().heu << " " << frontier.top().priority << endl;
+		if (!frontier.empty()) {
+			cout << frontier.top().cost << " " << frontier.top().heu << " " << expNum << endl;
+		}
+		else {
+			cout << 0 << " " << heuristic(currentState) << " " << expNum << endl;
+		}
 		cout << endl;
+		expNum++;
 }
 
 
 Solver::Solver(vector<vector<int>> init, vector<vector<int>> goal) {
 	currentState = init;
 	currentCost = 0;
+	expNum = 1;
+	lastPri = 0;
 	goalState = goal;
 	display(currentState); //prints initial state.
 }
@@ -111,13 +97,11 @@ int Solver::heuristic(vector<vector<int>> cur, int heu, int x, int y) {
 
 int Solver::genKey(vector<vector<int>> cur) {
 	string temp = "0";
-	//hash<string> genHash;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			temp += to_string(cur[i][j]);
 		}
 	}
-	//return genHash(temp);
 	return stoi(temp);
 }
 
@@ -125,40 +109,38 @@ void Solver::nodeBuilder(vector<vector<int>> cur, int cost) {
 	int heu = heuristic(cur); //heu function
 	int eval = ((currentCost + cost) + heu); // f(n) 
 	int pri = abs(100 - eval);
+	int key = genKey(cur);
 
-	if (exploredSet.empty()) {
+	if (exploredSet.empty() || exploredSet.find(key) == exploredSet.end()) {
 		puzzleNode pn = { cur, (currentCost + cost), heu, pri };
 		frontier.push(pn); //add nodes to frontier set
 	}
-	else {
-		int key = genKey(cur);
-		if (exploredSet.find(key) == exploredSet.end()) {
-			puzzleNode pn = { cur, (currentCost + cost), heu, pri };
-			frontier.push(pn); //add nodes to frontier set
-		}
-	}
+	
 }  
 
 void Solver::prepHash() { //name of this function is irrelevant. Change it at some point.
-		// Get the current state from the top of the priority queue
+	// Get the current state from the top of the priority queue
+	vector<vector<int>> cur = frontier.top().state;
+	int hash = genKey(cur);
 
-		vector<vector<int>> cur = frontier.top().state;
-		int hash = genKey(cur);
+	// Taking top node, updating global values, saving to hash table 
+	exploredSet.emplace(hash, frontier.top());
+	currentCost = frontier.top().cost;
+	currentState = cur;
+	lastPri = frontier.top().priority;
+	display(cur);
+	frontier.pop();
 
-		// Taking top node, updating global values, saving to hash table 
-		
-		exploredSet.emplace(hash, frontier.top());
-		currentCost = frontier.top().cost;
-		currentState = cur;
-		display(cur);
-		frontier.pop();
-
-		while (!frontier.empty()) {
+	while (!frontier.empty()) {
+		if (frontier.top().priority == lastPri) {
+			display(frontier.top().state);
+			overflow.push(frontier.top());
+		}
 			cur = frontier.top().state;
 			hash = genKey(cur);
 			exploredSet.emplace(hash, frontier.top());
 			frontier.pop();
-		} 
+	} 
 }
 
 void Solver::expandStates() {
@@ -212,6 +194,12 @@ void Solver::solve() {
 	//When ready, add a while loop that runs until currentState == goalState.
 	while(!(currentState == goalState)){
 		expandStates();
+		while (!overflow.empty()) {
+			currentState = overflow.top().state;
+			currentCost = overflow.top().cost;
+			expandStates();
+			overflow.pop();
+		}
 		prepHash();
 	}
 }
