@@ -17,7 +17,7 @@ void Solver::display(vector<vector<int>> cur) { //User interface design would go
 			}
 			curRow += to_string(cur[i][j]);
 		}
-		cout << curRow << endl;
+		cout  << curRow << endl;
 	}
 	if (!frontier.empty()) {
 		cout << frontier.top().cost << " " << frontier.top().heu << " " << expNum << endl;
