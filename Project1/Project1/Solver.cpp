@@ -7,24 +7,28 @@ Solver::Solver() {
 	cout << "Invalid object used as input" << endl;
 }
 
-void Solver::display(vector<vector<int>> cur) { //User interface design would go here.
+void Solver::display(vector<vector<int>> cur) { //User interface design would go 
+		std::cout << "--------\n";
 	for (int i = 0; i < 3; i++) {
 		string curRow = "";
 		for (int j = 0; j < 3; j++) {
 			if (cur[i][j] == 0) {
-				curRow += "-";
+				curRow += "|-";
 				continue;
 			}
-			curRow += to_string(cur[i][j]);
+			curRow += "|" + to_string(cur[i][j]);
 		}
-		cout  << curRow << endl;
+		cout << curRow << "|" << endl;
 	}
 	if (!frontier.empty()) {
-		cout << frontier.top().cost << " " << frontier.top().heu << " " << expNum << endl;
+		std::cout << "--------\n";
+		cout << frontier.top().cost << " " << frontier.top().heu << " " <<
+			expNum << endl;
 	}
 	else {
 		cout << 0 << " " << heuristic(currentState) << " " << expNum << endl;
 	}
+	std::cout << "--------\n";
 	cout << endl;
 	expNum++;
 }
